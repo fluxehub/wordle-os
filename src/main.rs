@@ -1,21 +1,40 @@
 #![no_std]
 #![no_main]
 
-use core::panic::PanicInfo;
+mod draw_target;
 
-static HELLO: &[u8] = b"Hello World!";
+use core::panic::PanicInfo;
+use embedded_graphics::{mono_font::MonoTextStyle, prelude::*, primitives::Rectangle, text::Text};
+use embedded_layout::{layout::linear::LinearLayout, prelude::*};
+use profont::PROFONT_9_POINT;
+
+use draw_target::{VGAColor, VGATarget};
+
+// static HELLO: &[u8] = b"Hello World!";
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    let vga_buffer = 0xb8000 as *mut u8;
+    let mut display = VGATarget::init();
 
-    for (i, &byte) in HELLO.iter().enumerate() {
-        unsafe {
-            // Print the character in pink
-            *vga_buffer.offset(i as isize * 2) = byte;
-            *vga_buffer.offset(i as isize * 2 + 1) = 0xd;
-        }
-    }
+    // Pallete test
+    // for i in 0..=0xFF_i32 {
+    //     let square = Rectangle::new(Point::new(i % 16 * 10, i / 16 * 10), Size::new(10, 10))
+    //         .into_styled(PrimitiveStyle::with_fill(VGAColor::from(i as u8)));
+
+    //     square.draw(&mut display).unwrap();
+    // }
+
+    let text_style = MonoTextStyle::new(&PROFONT_9_POINT, VGAColor::from(0x0F));
+    let text = Text::new("Hello World!", Point::zero(), text_style);
+
+    LinearLayout::vertical(Chain::new(text))
+        .align_to(
+            &Rectangle::new(Point::zero(), Size::new(320, 240)),
+            horizontal::Center,
+            vertical::Center,
+        )
+        .draw(&mut display)
+        .unwrap();
 
     panic!();
 }

@@ -13,3 +13,7 @@ panic = "abort"
 
 [dependencies]
 bootloader = "0.9.8"
+vga = { git = "https://github.com/clavierpaul/vga" }
+embedded-graphics = "0.7.1"
+profont = "0.5.0"
+embedded-layout = "0.2.0"
