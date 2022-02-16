@@ -1,9 +1,6 @@
 use embedded_graphics::{
     image::ImageRaw,
-    mono_font::{
-        mapping::{self, StrGlyphMapping},
-        DecorationDimensions, MonoFont,
-    },
+    mono_font::{mapping, DecorationDimensions, MonoFont},
     prelude::Size,
 };
 
@@ -16,13 +13,3 @@ pub const COZETTE: MonoFont = MonoFont {
     underline: DecorationDimensions::default_underline(13),
     strikethrough: DecorationDimensions::default_strikethrough(13),
 };
-
-// pub const COZETTE: MonoFont = MonoFont {
-//     image: ImageRaw::new_binary(DATA, 1),
-//     glyph_mapping: &StrGlyphMapping::new(" ", 0),
-//     character_size: Size::new(1, 1),
-//     character_spacing: 4,
-//     baseline: 13,
-//     underline: DecorationDimensions::default_underline(13),
-//     strikethrough: DecorationDimensions::default_strikethrough(13),
-// };
