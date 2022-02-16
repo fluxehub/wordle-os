@@ -11,7 +11,6 @@ impl VGATarget {
         let writer = Graphics320x240x256::new();
 
         writer.set_mode();
-
         writer.clear_screen(0x00);
 
         Self { writer }

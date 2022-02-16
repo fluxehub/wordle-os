@@ -146,15 +146,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "profont"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eec6ccbe5cbbbdb18822a3e5b36a5e42bc9a3df0874ae0cfbf7abef285e9c2e0"
-dependencies = [
- "embedded-graphics",
-]
-
-[[package]]
 name = "quote"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -221,7 +212,6 @@ dependencies = [
  "bootloader",
  "embedded-graphics",
  "embedded-layout",
- "profont",
  "vga",
 ]
 
