@@ -54,6 +54,12 @@ impl DrawTarget for VGATarget {
 
         Ok(())
     }
+
+    fn clear(&mut self, color: Self::Color) -> Result<(), Self::Error> {
+        self.writer.clear_screen(*color);
+
+        Ok(())
+    }
 }
 
 impl OriginDimensions for VGATarget {

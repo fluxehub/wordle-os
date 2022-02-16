@@ -2,31 +2,26 @@
 #![no_main]
 
 mod cozette;
-mod draw_target;
+mod vga_hires_target;
+mod vga_target;
 
 use core::panic::PanicInfo;
-use embedded_graphics::{mono_font::MonoTextStyle, prelude::*, primitives::Rectangle, text::Text};
-use embedded_layout::{layout::linear::LinearLayout, prelude::*};
+use embedded_graphics::{mono_font::MonoTextStyle, prelude::*, text::Text};
 
-use draw_target::{VGAColor, VGATarget};
+use vga::colors::Color16;
+use vga_hires_target::{VGA16Color, VGAHiResTarget};
+// use vga_target::{VGAColor, VGATarget};
 
 use crate::cozette::COZETTE;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    let mut display = VGATarget::init();
+    let mut display = VGAHiResTarget::init();
 
-    let text_style = MonoTextStyle::new(&COZETTE, VGAColor::from(0x0F));
-    let text = Text::new("When the imposter is sus!", Point::zero(), text_style);
+    let text_style = MonoTextStyle::new(&COZETTE, VGA16Color::from(Color16::LightRed));
+    let text = Text::new("When the imposter is sus!", Point::new(2, 11), text_style);
 
-    LinearLayout::vertical(Chain::new(text))
-        .align_to(
-            &Rectangle::new(Point::zero(), Size::new(320, 240)),
-            horizontal::Center,
-            vertical::Center,
-        )
-        .draw(&mut display)
-        .unwrap();
+    text.draw(&mut display).unwrap();
 
     panic!();
 }
